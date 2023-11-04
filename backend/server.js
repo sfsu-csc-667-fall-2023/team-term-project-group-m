@@ -5,8 +5,8 @@ require("dotenv").config();
 // const cookieParser = require("cookie-parser");
 // const morgan = require("morgan");
 
-// const express = require("express");
-// const app = express();
+const express = require("express");
+const app = express();
 
 const testRoutes = require("./routes/test/index.js");
 app.use("/test", testRoutes);
