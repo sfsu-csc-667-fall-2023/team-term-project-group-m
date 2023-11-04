@@ -10,18 +10,25 @@
     "server:dev": "nodemon ./backend/server.js",
     "build": "webpack",
     "build:dev": "webpack --watch",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "db:create": "node-pg-migrate create -- ",
+    "db:migrate": "node-pg-migrate up ",
+    "db:rollback": "node-pg-migrate down "
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cookie-parser": "^1.4.6",
+    "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "expres": "^0.0.5",
     "express": "^4.18.2",
     "http-errors": "^2.0.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "node-pg-migrate": "^6.2.2",
+    "pg": "^8.11.3",
+    "pg-promise": "^11.5.4"
   },
   "devDependencies": {
     "babel-loader": "^9.1.3",
