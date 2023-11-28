@@ -5,8 +5,26 @@ const createError = require("http-errors");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 
+
 const express = require("express");
 const app = express();
+
+
+// Sessions
+const session = require('express-session');
+const postgreSession = require('connect-pg-simple')(session);
+app.use(session({
+  store: new postgreSession({
+    conObject: {
+      connectionString: process.env.DATABASE_URL, // PostgreSQL database configuration from the .env file
+    },
+  }),
+  secret: 'mysteriousUnoKey',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
+}));
+
 
 const testRoutes = require("./routes/test/index.js");
 app.use("/test", testRoutes);
