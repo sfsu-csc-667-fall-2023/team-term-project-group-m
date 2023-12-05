@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <script src="/scripts/bundle.js"></script>
+    </head>
+    <body>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/lobby">Lobby</a></li>
+        </ul>
+        <p>Login</p>
+
+        <!-- Login Form -->
+        <form action="/login/login" method="get">
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" name="email"><br>
+            <label for="password">Password:</label><br>
+            <input type="text" id="password" name="password">
+            <input type="submit" value="Submit">
+        </form>
+
+    </body>
+</html>

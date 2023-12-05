@@ -32,7 +32,7 @@ app.use("/test", testRoutes);
 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -40,9 +40,13 @@ app.use(express.static(path.join(__dirname, "static")));
 
 const requestTimeMiddleware = require("./middleware/request-time.js");
 const rootRoutes = require("./routes/root");
+const loginRoutes = require("./routes/login");
+const registerRoutes = require("./routes/register");
 
 app.use(requestTimeMiddleware);
 app.use("/", rootRoutes);
+app.use("/login", loginRoutes);
+app.use("/register", registerRoutes);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

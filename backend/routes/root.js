@@ -6,4 +6,16 @@ router.get("/", (request, response) => {
   response.render("root", { name });
 });
 
+router.get("/register", (request, response) => {
+  response.render("register");
+});
+
+router.get("/login", (request, response) => {
+  response.render("login");
+});
+
+router.get("/lobby", (request, response) => {
+  response.render("lobby");
+});
+
 module.exports = router;
