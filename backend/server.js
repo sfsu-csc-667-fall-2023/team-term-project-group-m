@@ -17,12 +17,14 @@ app.use(session({
   store: new postgreSession({
     conObject: {
       connectionString: process.env.DATABASE_URL, // PostgreSQL database configuration from the .env file
+      ssl: { rejectUnauthorized: false }
     },
   }),
   secret: 'mysteriousUnoKey',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
+  ssl: { rejectUnauthorized: false }
 }));
 
 
@@ -53,6 +55,6 @@ app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
 
-// app.use((request, response, next) => {
-//   next(createError(404));
-// });
+app.use((request, response, next) => {
+  next(createError(404));
+});

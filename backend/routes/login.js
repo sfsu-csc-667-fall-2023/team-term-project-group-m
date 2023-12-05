@@ -17,11 +17,12 @@ router.post("/login", async (request, response) => {
             response.redirect("/login");
         }
         else {
-            console.log("User data retrieved is: " + user[0]);
+            console.log("User data retrieved is: " + user.email + ", " + user.username + ", " + user.password);
             const validated = await bcrypt.compare(password, user.password);
             if(validated == true){
                 console.log("User login successful.");
-                response.locals.user = user;
+                request.session.user = user;
+                console.log("request.session.user.username is: " + request.session.user.username)
                 response.redirect("/lobby");
             }
             else{

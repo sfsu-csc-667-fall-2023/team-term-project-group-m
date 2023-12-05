@@ -3,12 +3,7 @@
         <script src="/scripts/bundle.js"></script>
     </head>
     <body>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/register">Register</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/lobby">Lobby</a></li>
-        </ul>
+        <%- include ('partials/navbar') %>
         <p>Register</p>
 
         <form action="/register/register" method="post">
