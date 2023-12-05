@@ -10,6 +10,14 @@ const express = require("express");
 const app = express();
 
 
+// Socket.io setup
+const http = require('http');
+const socket = require('./middleware/socket.js');
+const server = http.createServer(app);
+socket.init(server);
+
+
+
 // Sessions
 const session = require('express-session');
 const postgreSession = require('connect-pg-simple')(session);
@@ -28,10 +36,6 @@ app.use(session({
 }));
 
 
-const testRoutes = require("./routes/test/index.js");
-app.use("/test", testRoutes);
-
-
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,20 +44,24 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "static")));
 
-const requestTimeMiddleware = require("./middleware/request-time.js");
+
 const rootRoutes = require("./routes/root");
 const loginRoutes = require("./routes/login");
 const registerRoutes = require("./routes/register");
+const gameRoutes = require("./routes/game.js")
 
-app.use(requestTimeMiddleware);
+
 app.use("/", rootRoutes);
 app.use("/login", loginRoutes);
 app.use("/register", registerRoutes);
+app.use("/game", gameRoutes)
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+
+server.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });
+
 
 app.use((request, response, next) => {
   next(createError(404));

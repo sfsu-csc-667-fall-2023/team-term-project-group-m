@@ -1,10 +1,35 @@
 <html>
     <head>
+        <script src="/socket.io/socket.io.js"></script>
         <script src="/scripts/bundle.js"></script>
     </head>
     <body>
         <%- include ('partials/navbar') %>
         <p>Lobby</p>
         <p>Welcome, <%= user.username %>!</p>
+
+        <form action="/game/createGame" method="post">
+            <button type="submit">Create a Game</button>
+        </form>
+
+
+        <ul id="game-list">
+           <!-- Displaying the current list of games in the lobby -->
+            <% games.forEach(function(game) { %>
+                <li>Game <%= game.gameid %>: <%= game.status %></li>
+              <% }); %>
+        </ul>
+
+        <script>
+
+            const socket = io();
+            socket.on('new-game', function(game) {
+                // When a user creates a new game, add it to the current list of games
+                const ul = document.getElementById('game-list');
+                const li = document.createElement('li');
+                li.appendChild(document.createTextNode(`Game ${game.gameid}: ${game.status}`));
+                ul.appendChild(li);
+            });
+        </script>
     </body>
 </html>
