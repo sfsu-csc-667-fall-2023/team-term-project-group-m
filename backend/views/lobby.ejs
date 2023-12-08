@@ -1,5 +1,47 @@
 <html>
     <head>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f0f0f0;
+                margin: 0;
+                padding: 0;
+            }
+
+            p {
+                margin: 10px;
+            }
+
+            form {
+                margin: 10px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 16px;
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+            #game-list {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            li {
+                background-color: #fff;
+                margin: 5px;
+                padding: 10px;
+                border-radius: 5px;
+            }
+
+        </style>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/scripts/bundle.js"></script>
     </head>
