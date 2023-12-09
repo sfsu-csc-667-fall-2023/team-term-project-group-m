@@ -35,6 +35,22 @@ app.use(session({
   ssl: { rejectUnauthorized: false }
 }));
 
+const io = require('socket.io')(server);
+
+io.on('connection', (socket) => {
+  console.log('A user connected');
+
+  // Event listener for chat messages
+  socket.on('send-chat-message', (data) => {
+    // Broadcast the message to all connected clients
+    io.emit('chat-message', { username: socket.username, message: data.message });
+  });
+
+  // Event listener for user disconnect
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
 
 app.use(morgan("dev"));
 app.use(express.json());
