@@ -55,7 +55,7 @@
         </form>
         <div>
             <h2>Global Chat</h2>
-            <div id="message-cpontainer"></div>
+            <div id="message-container"></div>
             <form id="send-container">
                 <input type="text" id="message-input" placeholder="Type your message..." />
                 <button type="submit" id="send-button">Send</button>
@@ -82,7 +82,7 @@ const messageContainer = document.getElementById('message-container')
 const messageForm = document.getElementById('send-container')
 const messageInput = document.getElementById('message-input')
 
-const name = prompt('What is your name?')
+const name = user.username
 appendMessage('You joined')
 socket.emit('new-user', name)
 
