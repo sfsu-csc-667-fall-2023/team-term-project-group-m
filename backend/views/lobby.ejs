@@ -53,7 +53,14 @@
         <form action="/game/createGame" method="post">
             <button type="submit">Create a Game</button>
         </form>
-
+        <div>
+            <h2>Global Chat</h2>
+            <ul id="chat-messages"></ul>
+            <form id="chat-form">
+                <input type="text" id="chat-input" placeholder="Type your message..." />
+                <button type="submit">Send</button>
+            </form>
+        </div>
 
         <ul id="game-list">
            <!-- Displaying the current list of games in the lobby -->
@@ -63,8 +70,19 @@
         </ul>
 
         <script>
-
             const socket = io();
+            function appendMessage(username, message) {
+        const chatMessages = document.getElementById('chat-messages');
+        const li = document.createElement('li');
+        li.appendChild(document.createTextNode(`${username}: ${message}`));
+        chatMessages.appendChild(li);
+    }
+
+    // Event listener for new chat messages
+    socket.on('chat-message', function (data) {
+        appendMessage(data.username, data.message);
+    });
+
             socket.on('new-game', function(game) {
                 // When a user creates a new game, add it to the current list of games
                 const ul = document.getElementById('game-list');
@@ -72,6 +90,20 @@
                 li.appendChild(document.createTextNode(`Game ${game.gameid}: ${game.status}`));
                 ul.appendChild(li);
             });
+            document.getElementById('chat-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const messageInput = document.getElementById('chat-input');
+        const message = messageInput.value.trim();
+        
+        if (message !== '') {
+            // Emit the chat message to the server
+            socket.emit('send-chat-message', { message });
+            // Append the message to the client's own chat
+            appendMessage('You', message);
+            // Clear the input field
+            messageInput.value = '';
+        }
+    });
         </script>
     </body>
 </html>
