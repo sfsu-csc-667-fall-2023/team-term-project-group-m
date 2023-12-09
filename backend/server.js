@@ -40,10 +40,8 @@ const io = require('socket.io')(server);
 io.on('connection', (socket) => {
   console.log('A user connected');
 
-    socket.username = "DefaultUsername";
-
-    socket.on('set-username', (user) => {
-      socket.username = user.username;
+    socket.on('set-username', (data) => {
+      socket.username = data.username;
       console.log(`Username set for socket ${socket.id}: ${socket.username}`);
   });
 
