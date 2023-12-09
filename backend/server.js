@@ -37,24 +37,26 @@ app.use(session({
 
 const io = require('socket.io')(server);
 
-io.on('connection', (socket) => {
+const users = {}
+
+
+io.on('connection', socket => {
   console.log('A user connected');
+  socket.on('new-user', name=>{
+    users[socket.id] = name
+    socket.broadcast.emit('user-connected', name)
+  })
+  socket.emit('chat-message', 'Hello World')
+  socket.on('send-chat-message', message => {
+    socket.broadcast.emit('chat-message', { message: message, name: 
+      users[socket.id] })
+  })
+  
 
-    socket.username = "DefaultUsername";
 
-    socket.on('set-username', (user) => {
-      socket.username = user.username;
-      console.log(`Username set for socket ${socket.id}: ${socket.username}`);
-  });
-
-  // Event listener for chat messages
-  socket.on('send-chat-message', (data) => {
-    // Broadcast the message to all connected clients
-    io.emit('chat-message', { username: socket.username, message: data.message });
-  });
-
-  // Event listener for user disconnect
   socket.on('disconnect', () => {
+    socket.broadcast.emit('user-disconnected', users[socket.id])
+    delete users[socket.id]
     console.log('A user disconnected');
   });
 });

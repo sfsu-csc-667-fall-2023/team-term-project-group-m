@@ -55,10 +55,10 @@
         </form>
         <div>
             <h2>Global Chat</h2>
-            <ul id="chat-messages"></ul>
-            <form id="chat-form">
-                <input type="text" id="chat-input" placeholder="Type your message..." />
-                <button type="submit">Send</button>
+            <div id="message-cpontainer"></div>
+            <form id="send-container">
+                <input type="text" id="message-input" placeholder="Type your message..." />
+                <button type="submit" id="send-button">Send</button>
             </form>
         </div>
 
@@ -70,41 +70,43 @@
         </ul>
 
         <script>
-            const socket = io();
-    
-    function appendMessage(username, message) {
-        const chatMessages = document.getElementById('chat-messages');
-        const li = document.createElement('li');
-        li.appendChild(document.createTextNode(`${username}: ${message}`));
-        chatMessages.appendChild(li);
+    const socket = io();
+    const messageContainer = document.getElementById('message-container')
+    const messageForm = document.getElementById('send-container')
+    const messageInput = document.getElementById('message-input')
+
+    const name = prompt('What is your name?')
+    appendMessage('You joined')
+    socket.emit('new-user', name)
+    socket.on('chat-message', data => {
+        appendMessage(`${data.name}: ${data.message}`)
+    })
+    socket.on('user-connected', data => {
+        appendMessage(`${name} connected`)
+    })
+    socket.on('user-disconnected', data => {
+        appendMessage(`${name} disconnected`)
+    })
+
+    messageForm.addEventListener('submit', e => {
+        e.preventDefault()
+        const message = messageInput.value
+        appendMessage(`You: ${message}`)
+        socket.emit('send-chat-message', message)
+        messageInput.value = ''
+    })
+
+    function appendMessage(message) {
+        const messageElement = document.createElement('div')
+        messageElement.innerText = message
+        messageContainer.append(messageElement)
     }
-
-    // Event listener for new chat messages
-    socket.on('chat-message', function (data) {
-        appendMessage(data.username, data.message);
-    });
-
     socket.on('new-game', function (game) {
         // When a user creates a new game, add it to the current list of games
         const ul = document.getElementById('game-list');
         const li = document.createElement('li');
         li.appendChild(document.createTextNode(`Game ${game.gameid}: ${game.status}`));
         ul.appendChild(li);
-    });
-
-    document.getElementById('chat-form').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const messageInput = document.getElementById('chat-input');
-        const message = messageInput.value.trim();
-
-        if (message !== '') {
-            // Emit the chat message to the server
-            socket.emit('send-chat-message', { message });
-            // Append the message to the client's own chat using the server-provided username
-            appendMessage('<%= user.username %>', message);
-            // Clear the input field
-            messageInput.value = '';
-        }
     });
         </script>
     </body>
