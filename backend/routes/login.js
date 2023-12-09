@@ -21,7 +21,8 @@ router.post("/login", async (request, response) => {
             const validated = await bcrypt.compare(password, user.password);
             if(validated == true){
                 console.log("User login successful.");
-                response.locals.user = user;
+                request.session.user = user;
+                console.log("request.session.user.username is: " + request.session.user.username)
                 response.redirect("/lobby");
             }
             else{
