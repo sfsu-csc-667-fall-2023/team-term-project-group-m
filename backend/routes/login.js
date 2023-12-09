@@ -2,7 +2,11 @@ const express = require('express');
 const router = express.Router();
 const db = require("../db/connection.js");
 const bcrypt = require('bcrypt');
-
+function login() {
+    const email = document.getElementById('email').value;
+    socket.emit('login', {email});
+    console.log(email)
+  }
 router.post("/login", async (request, response) => {
     var email = request.body.email;
     var password = request.body.password;
