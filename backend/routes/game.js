@@ -18,4 +18,9 @@ router.post("/createGame", async (request, response)=>{
     }
 })
 
+router.get("/:id", (request, respomse) => {
+    const { id } = request.params;
+    response.render("game", { id });
+});
+
 module.exports = router;
