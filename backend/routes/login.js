@@ -23,6 +23,8 @@ router.post("/login", async (request, response) => {
                 console.log("User login successful.");
                 request.session.user = user;
                 console.log("request.session.user.username is: " + request.session.user.username)
+                io.to(socket.id).emit('set-username', { username: user.username });
+                
                 response.redirect("/lobby");
             }
             else{
