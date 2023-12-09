@@ -34,7 +34,6 @@ app.use(session({
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
   ssl: { rejectUnauthorized: false }
 }));
-
 const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
