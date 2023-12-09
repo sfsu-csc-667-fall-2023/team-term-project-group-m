@@ -39,6 +39,14 @@ const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
   console.log('A user connected');
+  ß
+  if (socket.handshake.session.user) {
+    socket.username = socket.handshake.session.user.username;
+    console.log(`Socket username set to: ${socket.username}`);
+  } else {
+    console.log('User session not found. Using default username.');
+    socket.username = "DefaultUsername";
+  }
 
   // Event listener for chat messages
   socket.on('send-chat-message', (data) => {
