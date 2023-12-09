@@ -35,11 +35,18 @@ router.post("/createGame", async (request, response)=>{
 
         const io = socket.getIO();
         io.emit('new-game', gameCreated);
-        console.log("Reached the end of /createGame in game.js");
-    } catch(error){
+        response.redirect(`/game/${gameCreated.gameid}`);
+    } catch (error) {
         console.error(error);
-    }
+        console.log("Reached the end of /createGame in game.js");
+    } 
 });
+router.get("/:gameid", (request, response) => {
+    const gameId = request.params.gameid;
+    // You can render your game page (e.g., game.ejs) and pass the gameId to it
+    response.render('game', { gameId });
+});
+
 function initializeUnoDeck() {
     const colors = ['red', 'green', 'blue', 'yellow'];
     const values = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'skip', 'reverse', 'draw2'];
