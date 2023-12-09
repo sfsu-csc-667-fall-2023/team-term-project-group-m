@@ -39,27 +39,19 @@ const io = require('socket.io')(server);
 
 const users = {}
 
-
 io.on('connection', socket => {
-  console.log('A user connected');
-  socket.on('new-user', name=>{
+  socket.on('new-user', name => {
     users[socket.id] = name
     socket.broadcast.emit('user-connected', name)
   })
-  socket.emit('chat-message', 'Hello World')
   socket.on('send-chat-message', message => {
-    socket.broadcast.emit('chat-message', { message: message, name: 
-      users[socket.id] })
+    socket.broadcast.emit('chat-message', { message: message, name: users[socket.id] })
   })
-  
-
-
   socket.on('disconnect', () => {
     socket.broadcast.emit('user-disconnected', users[socket.id])
     delete users[socket.id]
-    console.log('A user disconnected');
-  });
-});
+  })
+})
 
 app.use(morgan("dev"));
 app.use(express.json());
