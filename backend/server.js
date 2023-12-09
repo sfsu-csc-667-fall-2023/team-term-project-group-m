@@ -34,15 +34,11 @@ app.use(session({
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
   ssl: { rejectUnauthorized: false }
 }));
+
 const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
   console.log('A user connected');
-    socket.on('set-username', (data) => {
-      console.log("test");
-      socket.username = data.username;
-      console.log(`Username set for socket ${socket.id}: ${socket.username}`);
-  });
 
   // Event listener for chat messages
   socket.on('send-chat-message', (data) => {
