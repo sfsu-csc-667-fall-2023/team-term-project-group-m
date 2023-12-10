@@ -84,6 +84,7 @@ app.get("/game/:gameid", (request, response) => {
   const gameId = request.params.gameid;
   const user = request.session.user;
   response.render("game", { gameId });
+  response.regnder("game", {user});
 });
 const PORT = process.env.PORT || 3000;
 
