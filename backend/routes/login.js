@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require("../db/connection.js");
 const bcrypt = require('bcrypt');
-const socket = io();
+const socket = require('./middleware/socket.js');
 
 router.post("/login", async (request, response) => {
     var email = request.body.email;
