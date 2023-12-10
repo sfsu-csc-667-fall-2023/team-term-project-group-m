@@ -70,7 +70,8 @@
         </ul>
 
         <script>
-            const socket = io();
+        const socket = io();
+        socket.username = "<%= username %>";
     
     function appendMessage(username, message) {
         const chatMessages = document.getElementById('chat-messages');
@@ -100,8 +101,6 @@
         if (message !== '') {
             // Emit the chat message to the server
             socket.emit('send-chat-message', { message });
-            // Append the message to the client's own chat using the server-provided username
-            appendMessage('<%= user.username %>', message);
             // Clear the input field
             messageInput.value = '';
         }

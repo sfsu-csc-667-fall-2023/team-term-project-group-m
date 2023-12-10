@@ -72,6 +72,10 @@ app.use("/", rootRoutes);
 app.use("/login", loginRoutes);
 app.use("/register", registerRoutes);
 app.use("/game", gameRoutes)
+app.get("/lobby", (request, response) => {
+  // Pass the username to the view
+  response.render("lobby", { user: request.session.user, username: request.session.username}); 
+});
 const PORT = process.env.PORT || 3000;
 
 

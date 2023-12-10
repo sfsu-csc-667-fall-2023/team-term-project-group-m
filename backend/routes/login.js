@@ -22,7 +22,8 @@ router.post("/login", async (request, response) => {
             if(validated == true){
                 console.log("User login successful.");
                 request.session.user = user;
-                console.log("request.session.user.username is: " + request.session.user.username)
+                console.log("request.session.user.username is: " + request.session.user.username);
+                request.session.username = user.username;
                 response.redirect("/lobby");
             }
             else{
