@@ -51,21 +51,7 @@
         </style>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/scripts/bundle.js"></script>
-    <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Establish a connection to the server
-                const socket = io();
-                console.log("hello world")
 
-                function login() {
-                    const email = document.getElementById('email').value;
-                    console.log(email);
-                    
-                    // Emit the 'login' event with the email to the server
-                    socket.emit('login', email);
-                }
-            });
-        </script>
     </head>
     <body>
         <%- include ('partials/navbar') %>

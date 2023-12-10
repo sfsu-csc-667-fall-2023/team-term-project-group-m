@@ -40,11 +40,9 @@ const io = require('socket.io')(server);
 io.on('connection', (socket) => {
   console.log('A user connected');
 
-    socket.username = "DefaultUsername";
-
-    socket.on('login', (data) => {
-      socket.username = data.email;
-      console.log(`Username set for socket ${socket.id}: ${socket.username}`);
+    socket.on('get_user', (data) => {
+      socket.username = data;
+      console.log(`Username set for socket ${socket.username}`);
   });
 
   // Event listener for chat messages
