@@ -82,7 +82,7 @@ app.get("/lobby", (request, response) => {
 
 app.get("/game/:gameid", (request, response) => {
   const gameId = request.params.gameid;
-  const user = req.session.user;
+  const user = request.session.user;
   response.render("game", { gameId });
 });
 const PORT = process.env.PORT || 3000;
