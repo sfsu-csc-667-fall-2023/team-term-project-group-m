@@ -53,6 +53,28 @@
         <form action="/game/createGame" method="post">
             <button type="submit">Create a Game</button>
         </form>
+        <script>
+            document.getElementById('create-game-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                // Send a request to create a new game
+                fetch('/game/createGame', { method: 'POST' })
+                    .then(response => {
+                        if (response.ok) {
+                            // If the request is successful, redirect to the new game page
+                            return response.json();
+                        } else {
+                            throw new Error('Error creating a game');
+                        }
+                    })
+                    .then(data => {
+                        window.location.href = `/game/${data.gameid}`;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        // Handle error, e.g., display an error message to the user
+                    });
+            });
+        </script>
         <div>
             <h2>Global Chat</h2>
             <ul id="chat-messages"></ul>

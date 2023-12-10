@@ -79,6 +79,12 @@ app.get("/lobby", (request, response) => {
   // Pass the username to the view
   response.render("lobby", { user: request.session.user, username: request.session.username}); 
 });
+
+app.get("/game/:gameid", (request, response) => {
+  const gameId = request.params.gameid;
+  
+  response.render("game", { gameId });
+});
 const PORT = process.env.PORT || 3000;
 
 
