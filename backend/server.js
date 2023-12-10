@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
   // Event listener for chat messages
   socket.on('send-chat-message', (data) => {
     // Broadcast the message to all connected clients
-    io.emit('chat-message', { username: socket.username, message: data.message });
+    io.emit('chat-message', { username: data.username, message: data.message });
   });
 
   // Event listener for user disconnect
