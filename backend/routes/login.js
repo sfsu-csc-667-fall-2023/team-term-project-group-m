@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require("../db/connection.js");
 const bcrypt = require('bcrypt');
-const socket = require('../middleware/socket.js');
 
 router.post("/login", async (request, response) => {
     var email = request.body.email;
@@ -24,7 +23,6 @@ router.post("/login", async (request, response) => {
                 console.log("User login successful.");
                 request.session.user = user;
                 console.log("request.session.user.username is: " + request.session.user.username)
-                socket.emit('get_user', request.session.user );
                 response.redirect("/lobby");
             }
             else{
