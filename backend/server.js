@@ -42,8 +42,8 @@ io.on('connection', (socket) => {
 
     socket.username = "DefaultUsername";
 
-    socket.on('set-username', (user) => {
-      socket.username = user.username;
+    socket.on('login', (data) => {
+      socket.username = data.email;
       console.log(`Username set for socket ${socket.id}: ${socket.username}`);
   });
 
