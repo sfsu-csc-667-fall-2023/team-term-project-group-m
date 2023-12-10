@@ -40,10 +40,14 @@ const io = require('socket.io')(server);
 io.on('connection', (socket) => {
   console.log('A user connected');
 
+  socket.on('set-username', (username) => {
+  socket.username = username;
+  console.log(`User ${username} connected`);
+});
   // Event listener for chat messages
   socket.on('send-chat-message', (data) => {
     // Broadcast the message to all connected clients
-    io.emit('chat-message', { username: data.username, message: data.message });
+    io.emit('chat-message', { username: socket.username, message: data.message });
   });
 
   // Event listener for user disconnect

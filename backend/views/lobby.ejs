@@ -71,7 +71,8 @@
 
         <script>
         const socket = io();
-        socket.username = "<%= user.username %>";
+        const username = "<%= user.username %>";
+        socket.emit('set-username', username);
     
     function appendMessage(username, message) {
         const chatMessages = document.getElementById('chat-messages');
@@ -100,7 +101,7 @@
 
         if (message !== '') {
             // Emit the chat message to the server
-            socket.emit('send-chat-message', { message, username: socket.username });
+            socket.emit('send-chat-message', { message });
             // Clear the input field
             messageInput.value = '';
         }
