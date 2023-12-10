@@ -38,13 +38,11 @@ app.use(session({
 const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
-console.log('A user connected');
-socket.on('userToServer', (username) => {
-  console.log('Received username from client:', username);
-})
+  console.log('A user connected');
+
     socket.username = "DefaultUsername";
 
-    socket.on('login', (user) => {
+    socket.on('set-username', (user) => {
       socket.username = user.username;
       console.log(`Username set for socket ${socket.id}: ${socket.username}`);
   });

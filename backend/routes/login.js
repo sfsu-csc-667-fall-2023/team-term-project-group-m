@@ -2,10 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require("../db/connection.js");
 const bcrypt = require('bcrypt');
-function login() {
-    const email = document.getElementById('email').value;
-    socket.emit('login', email);
-  }
+
 router.post("/login", async (request, response) => {
     var email = request.body.email;
     var password = request.body.password;
@@ -21,7 +18,6 @@ router.post("/login", async (request, response) => {
         }
         else {
             console.log("User data retrieved is: " + user.email + ", " + user.username + ", " + user.password);
-            socket.emit('userToServer', user.username);
             const validated = await bcrypt.compare(password, user.password);
             if(validated == true){
                 console.log("User login successful.");
