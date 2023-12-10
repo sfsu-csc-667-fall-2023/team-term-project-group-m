@@ -36,11 +36,6 @@ app.use(session({
 }));
 
 const io = require('socket.io')(server);
-function login() {
-  const email = document.getElementById('email').value;
-  console.log(email);
-  socket.emit('login', email);
-}
 
 io.on('connection', (socket) => {
   console.log('A user connected');
