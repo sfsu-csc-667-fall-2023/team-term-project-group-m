@@ -12,6 +12,7 @@ router.post("/login", async (request, response) => {
         const query = 'SELECT * FROM users WHERE email = $1';
         const values = [email];
         const user = await db.oneOrNone(query, values);
+        const socket = io();
         if(user === null){
             console.log("User not found.");
             response.redirect("/login");
