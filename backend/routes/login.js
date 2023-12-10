@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require("../db/connection.js");
 const bcrypt = require('bcrypt');
+const socket = io();
 
 router.post("/login", async (request, response) => {
     var email = request.body.email;
@@ -12,7 +13,6 @@ router.post("/login", async (request, response) => {
         const query = 'SELECT * FROM users WHERE email = $1';
         const values = [email];
         const user = await db.oneOrNone(query, values);
-        const socket = io();
         if(user === null){
             console.log("User not found.");
             response.redirect("/login");
