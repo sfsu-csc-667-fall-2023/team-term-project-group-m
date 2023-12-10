@@ -46,10 +46,16 @@
         <script src="/scripts/bundle.js"></script>
     </head>
     <body>
-        <%- include ('partials/navbar') %>
-        <p>Lobby</p>
-        <p>Welcome, <%= user.username %>!</p>
-
+        <ul>
+            <% if (user) { %>
+                <p>Welcome to the Lobby, <%= user.username %>! <a href="/logout">Logout</a> </p>
+            <% } else { %>
+                <li><a href="/register">Register</a></li>
+                <li><a href="/login">Login</a></li>
+            <% } %>
+        </ul>
+        <p>Click Here to Create a Game</p>
+        
         <form action="/game/createGame" method="post">
             <button type="submit">Create a Game</button>
         </form>

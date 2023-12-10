@@ -1,3 +1,5 @@
+//console.log("Database URL:", DATABASE_URL);
+
 const pgp = require("pg-promise")();
 
 const config = {
