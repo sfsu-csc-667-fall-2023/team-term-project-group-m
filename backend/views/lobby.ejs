@@ -71,7 +71,7 @@
 
         <script>
         const socket = io();
-        socket.username = "<%= username %>";
+        socket.username = "<%= user.username %>";
     
     function appendMessage(username, message) {
         const chatMessages = document.getElementById('chat-messages');
