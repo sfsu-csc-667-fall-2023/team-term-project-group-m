@@ -6,6 +6,12 @@
                 background-color: #f0f0f0;
                 margin: 0;
                 padding: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                background-image: url('./GameBackgrounds/UnoLobby.jpeg');
+
             }
 
             p {
@@ -32,6 +38,24 @@
             #game-list {
                 list-style-type: none;
                 padding: 0;
+                margin: 0;
+            }
+
+            #game-list li{
+                background-color: #fff;
+                margin: 5px;
+                padding: 10px;
+                border-radius: 5px;
+                display: inline-block; 
+                width: 150px; 
+                box-sizing: border-box;
+                border: 3px solid #000;
+
+            }
+
+            .game-box{
+                display: flex;
+                justify-content: center;
             }
 
             li {
@@ -41,24 +65,100 @@
                 border-radius: 5px;
             }
 
+            
+            .create-box {
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                background-color: #fff;
+                margin: 10px;
+                padding: 15px;
+                border-radius: 5px;
+                height: 300px;
+                border: 5px solid #000;
+            }
+
+            .chat-box{
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                background-color: #fff;
+                margin: 10px;
+                padding: 15px;
+                border-radius: 5px;
+                height: 300px;
+                width: 300px;
+                border: 5px solid #000;
+
+            }
+
+            .box-container{
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin: 10px;
+            }
+
+
+
+            header{
+                display: flex;
+                justify-content: flex-end;
+                width: 100%;
+                background-color: #333;
+                padding: 10px;
+                color: white;
+                box-sizing: border-box;
+                max-width: 100%;
+            }
+
+
         </style>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/scripts/bundle.js"></script>
     </head>
     <body>
+        <header>
+            <h1>Uno Game Lobby</h1>
         <ul>
             <% if (user) { %>
-                <p>Welcome to the Lobby, <%= user.username %>! <a href="/logout">Logout</a> </p>
+                <p>Welcome to the Lobby, <%= user.username %>! <a href="/logout">Logout </a> </p>
             <% } else { %>
                 <li><a href="/register">Register</a></li>
                 <li><a href="/login">Login</a></li>
             <% } %>
+            <style>
+                a {
+                    color: red;
+                    text-decoration: none; /* optional: remove underline */
+                }
+
+                h1{
+                    text-align: center;
+                    flex-grow: 1;
+                }
+            </style>
         </ul>
-        <p>Click Here to Create a Game</p>
+        </header>
         
-        <form action="/game/createGame" method="post">
-            <button type="submit">Create a Game</button>
-        </form>
+    <div class= "box-container">
+        <div class="create-box">
+            <h2>Create a Game Room Here</h2>
+            <form action="/game/createGame" method="post">
+                <button type="submit">Create a Game</button>
+            </form>
+        </div>
+
+        <div class="chat-box">
+            <h3>Global Chat</h3>
+            <ul id="chat-messages"></ul>
+            <form id="chat-form">
+                <input type="text" id="chat-input" placeholder="Type your message..." />
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
         <script>
             document.getElementById('create-game-form').addEventListener('submit', function (e) {
                 e.preventDefault();
@@ -81,17 +181,10 @@
                     });
             });
         </script>
-        <div>
-            <h2>Global Chat</h2>
-            <ul id="chat-messages"></ul>
-            <form id="chat-form">
-                <input type="text" id="chat-input" placeholder="Type your message..." />
-                <button type="submit">Send</button>
-            </form>
-        </div>
 
+    <div class = "game-box">
         <ul id="game-list">
-           <!-- Displaying the current list of games in the lobby -->
+        <!-- Displaying the current list of games in the lobby -->
             <% games.forEach(function(game) { %>
                 <li>
                     Game <%= game.gameid %>: <%= game.status %>
@@ -100,8 +193,10 @@
                         <input type="submit" value="Join">
                     </form>
                 </li>
-              <% }); %>
+            <% }); %>
         </ul>
+    </div>
+
 
         <script>
         const socket = io();

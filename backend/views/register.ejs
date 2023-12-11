@@ -3,12 +3,13 @@
         <style>
             body {
                 font-family: 'Arial', sans-serif;
-                background-color: #f0f0f0;
                 margin: 0;
                 padding: 0;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                background-image: url('./GameBackgrounds/UnoHomepage.jpeg');
+
             }
 
             p {
@@ -20,7 +21,7 @@
                 max-width: 300px;
                 margin: 20px;
                 padding: 20px;
-                background-color: #fff;
+                background-color: #333;
                 border-radius: 5px;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
@@ -28,6 +29,7 @@
             label {
                 display: block;
                 margin-bottom: 8px;
+                color: #f0f0f0;
             }
 
             input {
@@ -56,7 +58,7 @@
     </head>
     <body>
         <%- include ('partials/navbar') %>
-        <p>Register</p>
+        <h1>Register</h1>
 
         <form action="/register/register" method="post">
             <label for="username">Username:</label>
@@ -67,7 +69,9 @@
             <input type="password" id="password" name="password" required><br>
             <label for="confirmPassword">Confirm Password:</label>
             <input type="password" id="confirmPassword" name="confirmPassword" required><br>
-            <input type="submit" value="Submit">
+            <input type="submit" value="Register">
+            <a href="/">Have an account? Login Here</a>  
+
         </form>
     </body>
 </html>

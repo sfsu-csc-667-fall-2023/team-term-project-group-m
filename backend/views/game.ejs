@@ -1,10 +1,35 @@
 <html>
 <head>
-    <!-- Your head content goes here -->
+    <head>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f0f0f0;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .welcome-box{
+                display: flex;
+                justify-content: flex-end;
+                width: 100%;
+                background-color: #333;
+                padding: 10px;
+                color: white;
+                box-sizing: border-box;
+                max-width: 100%;
+            }
+        </style>
+    <div class="welcome-box">
+        <p>Welcome to Game <%= gameId %>, <%= user.username %>!</p>
+    </div>
 </head>
+
 <body>
-    <%- include ('partials/navbar') %>
-    <p>Welcome to Game <%= gameId %>, <%= user.username %>!</p>
     <!-- Your game content goes here -->
 </body>
 </html>
