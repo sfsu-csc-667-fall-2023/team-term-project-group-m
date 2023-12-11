@@ -27,6 +27,22 @@
     <div class="welcome-box">
         <p>Welcome to Game <%= gameId %>, <%= user.username %>!</p>
     </div>
+
+    <% players.forEach(player => { %>
+        <div class="player">
+            <h3>Player <%= player.username %>'s Cards:</h3>
+            <div class="cards">
+                <% gamecards.forEach(card => { 
+                    if (card.location === player.username) { %>
+                        <div class="card">
+                            card image goes here
+                        </div>
+                    <% }
+                }); %>
+            </div>
+        </div>
+    <% }); %>
+
 </head>
 
 <body>
