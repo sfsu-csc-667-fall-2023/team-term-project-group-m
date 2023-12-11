@@ -65,6 +65,7 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "static")));
 
 
+
 const rootRoutes = require("./routes/root");
 const loginRoutes = require("./routes/login");
 const registerRoutes = require("./routes/register");

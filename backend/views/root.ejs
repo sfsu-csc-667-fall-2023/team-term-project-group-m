@@ -3,17 +3,59 @@
         <style>
             body {
                 font-family: 'Arial', sans-serif;
-                background-color: #f0f0f0;
                 margin: 0;
                 padding: 0;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                background-image: url('./GameBackgrounds/UnoHomepage.jpeg');
+
             }
 
             p {
                 margin: 20px;
                 font-size: 24px;
+            }
+
+            form {
+                max-width: 300px;
+                margin: 20px;
+                padding: 20px;
+                background-color: #333;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            label {
+                display: block;
+                margin-bottom: 8px;
+                color: #f0f0f0;
+            }
+
+            small {
+
+            }
+
+            input {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            input[type="submit"] {
+                background-color: red;
+                color: white;
+                padding: 15px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            input[type="submit"]:hover {
+                background-color: green;
             }
         </style>
         <script src="/scripts/bundle.js"></script>
@@ -21,5 +63,17 @@
     <body>
         <%- include ('partials/navbar') %>
         <p>Welcome to UNO</p>
+        <p>Login</p>
+
+        <!-- Login Form -->
+        <form action="/login/login" method="post">
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" name="email"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password">
+            <input type="submit" value="Play!">
+            <a href="/register">New Player? Register Here</a>  
+        </form>
+
     </body>
 </html>
