@@ -93,7 +93,13 @@
         <ul id="game-list">
            <!-- Displaying the current list of games in the lobby -->
             <% games.forEach(function(game) { %>
-                <li>Game <%= game.gameid %>: <%= game.status %></li>
+                <li>
+                    Game <%= game.gameid %>: <%= game.status %>
+                    <form action="/game/joinGame" method="post">
+                        <input type="hidden" name="gameId" value="<%= game.gameid %>">
+                        <input type="submit" value="Join">
+                    </form>
+                </li>
               <% }); %>
         </ul>
 

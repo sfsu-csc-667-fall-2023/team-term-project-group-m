@@ -23,6 +23,24 @@ router.post("/createGame", async (request, response)=>{
     } 
 });
 
+router.post("/joinGame", async (request, response)=>{
+    const gameId = request.body.gameId;
+    const userId = request.session.user.userid;
+    console.log("Joining game " + gameId + " with user " + userId + ".");
 
+    try{
+        const query = 'INSERT INTO playerlist(gameid, userid) VALUES($1, $2) RETURNING *';
+        const values = [gameId, userId];
+        const currentPlayerList = await db.any(query, values);
+        console.log("Current player list is: " + currentPlayerList[0]);
+
+        //Render game.ejs with user and game info
+        response.render("game", {user: request.session.user, gameId: gameId});
+    }
+    catch(error){
+        console.error(error);
+        response.redirect("/lobby");
+    }
+});
 
 module.exports = router;
