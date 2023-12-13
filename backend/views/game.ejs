@@ -23,13 +23,34 @@
                 box-sizing: border-box;
                 max-width: 100%;
             }
+
+            .card {
+                width: 167px;
+                height: 258px;
+                margin-right: -10px;
+            }
+
+            .deck-container {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: flex-start;
+                padding-right: 155px;
+            }
+
+            .deckcard {
+                width: 167px; /* Width of your card */
+                height: 258px; /* Height of your card */
+                margin-right: -155px; /* Adjust for overlap */
+                margin-bottom: 20px; /* Space between rows */
+            }
+
         </style>
     <div class="welcome-box">
         <p>Welcome to Game <%= gameId %>, <%= user.username %>!</p>
     </div>
 
     <% players.forEach(player => { %>
-        <div class="player">
+        <div class="cards-container">
             <h3>Player <%= player.username %>'s Cards:</h3>
             <div class="cards">
                 <% gamecards.forEach(card => { 
@@ -42,6 +63,32 @@
             </div>
         </div>
     <% }); %>
+
+    <div class="discardPile">
+        <h3>Discard Pile:</h3>
+        <div class="cards-container">
+            <% gamecards.forEach(card => { 
+                if (card.location === 'discardpile') { %>
+                    <div class="card">
+                        card image goes here
+                    </div>
+                <% }
+            }); %>
+        </div>
+    </div>
+
+    <div class="deck">
+        <h3>Deck:</h3>
+        <div class="deck-container">
+            <% gamecards.forEach(card => { 
+                if (card.location === 'deck') { %>
+                    <div class="deckcard">
+                        <img src="/cardImages/card_55.png">
+                    </div>
+                <% }
+            }); %>
+        </div>
+    </div>
 
 </head>
 
