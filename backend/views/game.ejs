@@ -24,13 +24,7 @@
                 max-width: 100%;
             }
 
-            .card {
-                width: 167px;
-                height: 258px;
-                margin-right: -10px;
-            }
-
-            .deck-container {
+            .cards-container {
                 display: flex;
                 flex-wrap: wrap;
                 align-items: flex-start;
@@ -44,23 +38,37 @@
                 margin-bottom: 20px; /* Space between rows */
             }
 
+            .playercard {
+                width: 167px;
+                height: 258px;
+                margin-right: -40px;
+                margin-bottom: 20px; /* Space between rows */
+            }
+
+            .discardedcard {
+                width: 167px;
+                height: 258px;
+                margin-right: -100px;
+                margin-bottom: 20px; /* Space between rows */
+            }
+
+
+
         </style>
     <div class="welcome-box">
         <p>Welcome to Game <%= gameId %>, <%= user.username %>!</p>
     </div>
 
     <% players.forEach(player => { %>
+        <h3>Player <%= player.username %>'s Cards:</h3>
         <div class="cards-container">
-            <h3>Player <%= player.username %>'s Cards:</h3>
-            <div class="cards">
                 <% gamecards.forEach(card => { 
                     if (card.location === player.username) { %>
-                        <div class="card">
-                            card image goes here
+                        <div class="playercard">
+                            <img src="/cardImages/card_<%= card.cardid %>.png">
                         </div>
                     <% }
                 }); %>
-            </div>
         </div>
     <% }); %>
 
@@ -69,8 +77,8 @@
         <div class="cards-container">
             <% gamecards.forEach(card => { 
                 if (card.location === 'discardpile') { %>
-                    <div class="card">
-                        card image goes here
+                    <div class="discardedcard">
+                        <img src="/cardImages/card_<%= card.cardid %>.png">
                     </div>
                 <% }
             }); %>
@@ -79,7 +87,7 @@
 
     <div class="deck">
         <h3>Deck:</h3>
-        <div class="deck-container">
+        <div class="cards-container">
             <% gamecards.forEach(card => { 
                 if (card.location === 'deck') { %>
                     <div class="deckcard">
