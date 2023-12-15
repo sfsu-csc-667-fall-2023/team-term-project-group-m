@@ -49,6 +49,11 @@ io.on('connection', (socket) => {
     // Broadcast the message to all connected clients
     io.emit('chat-message', { username: socket.username, message: data.message });
   });
+  
+  socket.on('send-chatroom-message', (data) => {
+    // Broadcast the message to all connected clients
+    io.emit('chatroom-message', { username: socket.username, message: data.message });
+  });
 
   // Event listener for user disconnect
   socket.on('disconnect', () => {

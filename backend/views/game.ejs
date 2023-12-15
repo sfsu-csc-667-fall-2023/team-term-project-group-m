@@ -56,6 +56,7 @@
 
         </style>
     <div class="welcome-box">
+        <script src="/socket.io/socket.io.js"></script>
         <p>Welcome to Game <%= gameId %>, <%= user.username %>!</p>
     </div>
 
@@ -101,6 +102,43 @@
 </head>
 
 <body>
-    <!-- Your game content goes here -->
+    <div class="chat-box">
+        <h3>Chat</h3>
+        <ul id="chatroom-messages"></ul>
+        <form id="chatroom-form">
+            <input type="text" id="chatroom-input" placeholder="Type your message..." />
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    <script>
+        const socket = io();
+        const username = "<%= user.username %>";
+        socket.emit('set-username', username);
+    
+    function appendMessage(username, message) {
+        const chatMessages = document.getElementById('chatroom-messages');
+        const li = document.createElement('li');
+        li.appendChild(document.createTextNode(`${username}: ${message}`));
+        chatMessages.appendChild(li);
+    }
+
+    // Event listener for new chat messages
+    socket.on('chatroom-message', function (data) {
+        appendMessage(data.username, data.message);
+    });
+
+    document.getElementById('chatroom-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const messageInput = document.getElementById('chatroom-input');
+        const message = messageInput.value.trim();
+
+        if (message !== '') {
+            // Emit the chat message to the server
+            socket.emit('send-chatroom-message', { message });
+            // Clear the input field
+            messageInput.value = '';
+        }
+    });
+        </script>
 </body>
 </html>
