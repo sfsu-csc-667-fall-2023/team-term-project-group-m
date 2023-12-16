@@ -97,6 +97,15 @@
                 <% }
             }); %>
         </div>
+        <div class="cards-container">
+            <% gamecards.forEach(card => { 
+              if (card.location === 'bottom-screen') { %>
+                <div class="playercard">
+                  <img src="/cardImages/card_<%= card.cardid %>.png">
+                </div>
+              <% }
+            }); %>
+          </div>
     </div>
 
 </head>
@@ -147,6 +156,14 @@
             const handleCardClick = (cardId) => {
             socket.emit('card-click', { username, cardId });
             };
+            socket.on('update-game-state', (updatedGame) => {
+            console.log('Received updated game state:', updatedGame);
+            const cardElement = document.querySelector(`.card-${card.cardid}`);
+            if (cardElement) {
+                cardElement.style.marginBottom = card.location === 'bottom-screen' ? '20px' : '0px';
+            }
+        });
+
             document.querySelectorAll('.deckcard').forEach((cardElement) => {
             cardElement.addEventListener('click', () => {
                 const cardId = cardElement.querySelector('img').src.split('_')[1].split('.')[0];
@@ -160,10 +177,7 @@
             });
         });
           
-                socket.on('update-game-state', (updatedGame) => {
-                console.log('Received updated game state:', updatedGame);
-              });
-            });
+        });
           </script>
 </body>
 </html>
