@@ -140,5 +140,30 @@
         }
     });
         </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+            const socket = io();
+            const username = "<%= user.username %>";
+            const handleCardClick = (cardId) => {
+            socket.emit('card-click', { username, cardId });
+            };
+            document.querySelectorAll('.deckcard').forEach((cardElement) => {
+            cardElement.addEventListener('click', () => {
+                const cardId = cardElement.querySelector('img').src.split('_')[1].split('.')[0];
+                handleCardClick(cardId);
+                });
+            });
+            document.querySelectorAll('.playercard').forEach((cardElement) => {
+            cardElement.addEventListener('click', () => {
+                const cardId = cardElement.querySelector('img').src.split('_')[1].split('.')[0];
+                handleCardClick(cardId);
+            });
+        });
+          
+                socket.on('update-game-state', (updatedGame) => {
+                console.log('Received updated game state:', updatedGame);
+              });
+            });
+          </script>
 </body>
 </html>
